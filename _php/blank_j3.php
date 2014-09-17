@@ -127,7 +127,80 @@ class blank_j3{
         return $content_class;
     }
     
-   
+    function createFavicon()
+    {
+        $favicon_image = $this->_params->get('favicon_image');
+        $favicon_path = 'templates/blank_j3/favicon/';
+        if(isset($favicon_image)) {
+            if (!is_dir(__DIR__.'/../favicon')) {
+                mkdir(__DIR__.'/../favicon', 0777, true);
+            }
+
+            $favicon_set = array(
+                'apple-touch-icon' => array(
+                    57,60,72,76,114,120,144,152,
+                ),
+                'favicon' => array(
+                    16,32,96,160,196,
+                ),
+                'mstile' => array(
+                    70,144,150,310
+                ),
+            );
+
+            $return_favicons = '';
+            
+            // create favicons for all except Win
+            foreach ($favicon_set as $name => $sizes) {
+                foreach ($sizes as $size) {
+                    $favicon_name = "$name-$size"."x$size.png";
+                    $outFile = __DIR__."/../favicon/$favicon_name";
+                    $image = new Imagick($favicon_image);
+                    $image->adaptiveResizeImage($size, $size, true);
+                    $image->setImageBackgroundColor('None');
+                    $image->thumbnailImage($size,$size,1,'None');
+                    $image->writeImage($outFile);
+                    //echo "<img src='$favicon_path/$favicon_name' />";
+                    
+                    if($name != 'mstile')
+                        $return_favicons .= "<link rel='$name' sizes='$size"."x$size' href='$favicon_path/$favicon_name'>";
+                    unset($image);
+                }
+            }
+
+            // create favicon for Win
+            // generate XML
+            $tile_bg_win = $this->_params->get('bg_win');
+            $xml_data = <<<XML
+<?xml version="1.0" encoding="utf-8"?>
+<browserconfig>
+  <msapplication>
+    <tile>
+      <square70x70logo src="$favicon_path/mstile-70x70.png"/>
+      <square150x150logo src="$favicon_path/mstile-150x150.png"/>
+      <square310x310logo src="$favicon_path/mstile-310x310.png"/>
+      <wide310x150logo src="$favicon_path/mstile-310x150.png"/>
+      <TileColor>$tile_bg_win</TileColor>
+    </tile>
+  </msapplication>
+</browserconfig>
+XML;
+            file_put_contents(__DIR__."/../favicon/browserconfig.xml", $xml_data);
+            $return_favicons .= "<meta name='msapplication-TileColor' content='$tile_bg_win'>";
+            $return_favicons .= "<meta name='msapplication-TileImage' content='$favicon_path/mstile-144x144.png'>";
+            $return_favicons .= "<meta name='msapplication-config' content='$favicon_path/browserconfig.xml'>";
+            
+            // generate favicon.ico
+            $image = new Imagick($favicon_image);
+            $image->cropThumbnailImage(32,32);
+            $image->setFormat('ico');
+            $image->writeImage("$favicon_path/favicon.ico");
+            unset($image);
+
+            $return_favicons .= "<link rel='shortcut icon' href='$favicon_path/favicon.ico'>";
+            return $return_favicons;
+        }
+    }
 }
 
 ?>

@@ -24,6 +24,10 @@ $frontpage = ($active_menu->id == $default_menu->id);
 <!DOCTYPE html>
 <html dir="<?php echo $this->direction; ?>" lang="<?php echo $this->language; ?>" >
 	<head>
+		<!-- Favicon -->
+		<?php echo $blankj3_helper->createFavicon(); ?>
+		<!-- ..Favicon  -->
+		
 		<!-- Use of Google Font -->
 		<?php if ($params->get('googleFontName', '')): ?>
 			<link href='//fonts.googleapis.com/css?family=<?php echo $params->get('googleFontName'); ?>' rel='stylesheet' type='text/css' />

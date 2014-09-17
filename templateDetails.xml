@@ -245,6 +245,48 @@
 					description="TPL_BLANK_J3_DISABLED_SCRIPTS_LIST_DESC"
 				/>
 			</fieldset>
+			<fieldset name="favicon">
+				<field name="favicon_image"
+					type="media"
+					label="TPL_BLANK_J3_FAVICON_IMAGE_LABEL"
+					description="TPL_BLANK_J3_FAVICON_IMAGE_DESC"
+				/>
+
+				<!-- <field name="margin_ios"
+					type="integer"
+					default="0"
+					label="TPL_BLANK_J3_FAVICON_MARGIN_LABEL"
+					description="TPL_BLANK_J3_FAVICON_MARGIN_DESC"
+					first="0"
+					last="15"
+					step="1"
+				/> -->
+
+				<!-- <field name="bg_ios"
+					type="color"
+					default="#fff"
+					label="TPL_BLANK_J3_FAVICON_BG_IOS_LABEL"
+					description="TPL_BLANK_J3_FAVICON_BG_IOS_DESC"
+				/> -->
+
+<!-- 				<field name="win_white"
+					type="radio"
+					class="btn-group btn-group-yesno"
+					default="0"
+					label="TPL_BLANK_J3_FAVICON_WIN_COLOR_WHITE_LABEL"
+					description="TPL_BLANK_J3_FAVICON_WIN_COLOR_WHITE_DESC" >
+					   <option value="1">JYES</option>
+					   <option value="0">JNO</option>
+				</field> -->
+
+				<field name="bg_win"
+					type="color"
+					default="#2d89ef"
+					label="TPL_BLANK_J3_FAVICON_BG_WIN_LABEL"
+					description="TPL_BLANK_J3_FAVICON_BG_WIN_DESC"
+				/>
+
+			</fieldset>
 		</fields>
 
 	</config>
